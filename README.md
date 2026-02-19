@@ -2,6 +2,7 @@
 
 This project demonstrates a **production-grade AWS architecture** designed to transform a fragmented, "awful" dataset into a reliable machine learning model. It covers the entire lifecycle: **Automation**, **Data Engineering**, **Machine Learning**, and **Governance**.
 
+
 ![Architecture Diagram](assets/diagram.drawio.png)
 
 ---
