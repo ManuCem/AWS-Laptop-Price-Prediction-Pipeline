@@ -64,8 +64,7 @@ The pipeline follows two distinct paths once the cleaned data reaches Amazon S3:
 ### 1. The Analytics Path (Validation & BI)
 **AWS Glue** catalogs the data, allowing **Amazon Athena** to run validation queries.
 
-![Query Result 1](assets/query1.png)
-![Query Result 2](assets/query2.png)
+![Query Result 2](assets/query5.png)
 
 > **Insight:** Dashboards are visualized in **Amazon QuickSight** to track price trends across different brands.
 
