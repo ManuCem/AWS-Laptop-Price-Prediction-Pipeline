@@ -47,6 +47,7 @@ I deployed a dedicated **Amazon EC2** instance to run a Python-based consolidati
 ![Clean Data](assets/clean_data.png)
 
 ---
+
 ## ⚡ Performance Optimization: AWS Glue ETL
 To ensure the pipeline was cost-effective and the data was "ML-ready," I used **AWS Glue** to perform a specialized ETL (Extract, Transform, Load) job.
 
@@ -55,14 +56,22 @@ Instead of just moving the files, I configured a Glue Job to:
 * **Convert Format**: Transformed the raw CSV data into **Apache Parquet**, a columnar storage format.
 * **Schema Casting**: Manually mapped and changed **Data Types** (e.g., converting "Price" from a generic string to a numeric decimal) to ensure mathematical accuracy in SageMaker and Athena.
 
-
+![AWS Glue ETL Job](assets/glue.png)
 
 ### 💰 Why it Matters:
 * **Storage Efficiency**: Parquet reduced the storage footprint in S3 significantly compared to the original 10 CSVs.
 * **Cost & Speed**: By utilizing Parquet's columnar structure, **Amazon Athena** queries now scan 90% less data, making the analytics layer faster and cheaper.
 
-![AWS Glue ETL Job](assets/glue.png)
-![Parquet Storage Comparison](assets/parquet.png)
+---
+
+## 📊 Advanced Data Visualization: TIBCO TDV
+To gain deeper insights from the optimized `.parquet` files, I utilized **TIBCO TDV (Data Virtualization)**. 
+
+By connecting TDV directly to the S3 data lake, I was able to:
+* **Federated Queries**: Query the Parquet files without the need for additional data movement.
+* **Business Intelligence**: Create a virtualized view of the laptop price data to generate complex visualizations and trend reports.
+
+![TDV Visualization](assets/parquet.png)
 
 ---
 
