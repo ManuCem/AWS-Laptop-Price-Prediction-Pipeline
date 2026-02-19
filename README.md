@@ -1,48 +1,93 @@
-AWS Laptop Price Prediction Pipeline
-This project demonstrates a production-grade ML pipeline that transforms "awful" raw data into accurate laptop price predictions.
+AWS Laptop Price Prediction: End-to-End Data Pipeline
+This project demonstrates a production-grade AWS architecture designed to transform a fragmented, "awful" dataset into a reliable machine learning model. It covers the entire lifecycle: Automation, Data Engineering, Machine Learning, and Governance.
 
-🏗️ Architecture
-EventBridge: Scheduled the pipeline triggers.
+![Alternative Text](assets/diagram.drawio.png)
 
-EC2: Preprocessed messy laptop data via Python.
+📊 Data Source
+The raw data for this project was sourced from Kaggle:
 
-S3: Centralized data lake storage.
+Dataset Link: https://www.kaggle.com/datasets/rudraprasadbhuyan/amazon-laptop-messy-dataset
 
-Glue: Mapped the data schema.
+Original Format: The source provided the data in 10 separate CSV files requiring significant cleaning and consolidation.
 
-Athena: Validated data using SQL.
+🏗️ Architecture Overview
+EventBridge: Automates pipeline triggers.
 
-QuickSight: Visualized price trends and metrics.
+EC2: Preprocesses 10 messy CSVs using Python.
 
-SageMaker: Trained and deployed the XGBoost model.
+S3: Centralized data lake storage with Parquet optimization.
+
+Glue: Mapped the data schema and managed the Data Catalog.
+
+Athena: Validated data structure with SQL.
+
+QuickSight: Visualized laptop price trends.
+
+SageMaker: Trained XGBoost prediction model.
 
 IAM: Managed secure service access.
 
-CloudWatch: Monitored logs and pipeline health.
+CloudWatch: Logged model training health.
 
-SNS: Alerted via email on failures.
+SNS: Alerted via email on pipeline failures.
 
 🧹 The "Awful Data" Challenge
-The raw data was unusable due to inconsistent types and missing values. I used an EC2-hosted Python environment to clean and standardize the data before it entered the AWS ecosystem.
+The project began with 10 separate, inconsistent CSV files. The data was unusable due to missing values, mixed units (GB vs TB), and corrupted strings.
 
-(Insert your "EC2 Proof" capture here)
+The Rescue (EC2 + Python)
+I deployed a dedicated Amazon EC2 instance to run a Python-based consolidation script that:
 
-🤖 Model Results
-The XGBoost model provides price predictions with an average error of approximately $80, handling complex hardware features efficiently.
+Merged 10 fragmented datasets into one master file.
 
-(Insert your "SageMaker Result" capture here)
+Standardized hardware specs using Regex (Regular Expressions).
 
-🚀 Step-by-Step Upload Instructions
-When you get to your other PC:
+Cleaned the "Excel mess" to ensure high-quality input for the model.
 
-Initialize: git init
+![Alternative Text](assets/raw_data1.png)
+![Alternative Text](assets/raw_data2.png)
+![Alternative Text](assets/clean_data.png)
 
-Add Files: Put your notebook, script, and images in the folder.
+⚡ Performance Optimization: CSV to Parquet
+To ensure the pipeline was cost-effective and scalable, I implemented a format conversion:
 
-Stage: git add .
+Storage Efficiency: Transformed the final consolidated dataset from CSV to Apache Parquet, significantly reducing file size.
 
-Commit: git commit -m "Complete AWS Data Pipeline with XGBoost"
+Query Performance: Enabled Amazon Athena to perform columnar scans, reducing query costs by up to 90% and increasing speed.
 
-Connect: git remote add origin [Your-Repo-URL]
+![Alternative Text](assets/parquet.png)
 
-Push: git push -u origin main
+🚀 Data Workflow
+The pipeline follows two distinct paths once the cleaned data reaches Amazon S3:
+
+1. The Analytics Path (Validation & BI)
+AWS Glue catalogs the data, allowing Amazon Athena to run validation queries.
+
+![Alternative Text](assets/query1.png)
+![Alternative Text](assets/query2.png)
+![Alternative Text](assets/query3.png)
+![Alternative Text](assets/query4.png)
+![Alternative Text](assets/query5.png)
+
+Insights are then visualized in Amazon QuickSight dashboards to track price trends.
+
+
+2. The ML Path (Intelligence)
+Amazon SageMaker pulls the optimized Parquet data to train an XGBoost Regression model.
+
+![Alternative Text](assets/sagemaker.png)
+
+🛡️ Cloud Governance & Cleanup
+To follow AWS best practices for cost management and security, I utilized my custom tool:
+
+Tool Used: AWS-Governance-Cleanup-Tool
+
+Action: Upon project completion, the tool was used to automatically identify and decommission unused resources (EC2 instances, S3 buckets, and SageMaker endpoints) to prevent "Cloud Sprawl" and unnecessary billing.
+
+🌟 Key Skills Demonstrated
+Cloud Architecture: Designing automated "Hub and Spoke" pipelines.
+
+Data Engineering: Handling 10+ fragmented sources and Parquet columnar optimization.
+
+Machine Learning: Feature engineering and XGBoost implementation.
+
+Governance: Using custom automation to manage resource lifecycles and costs.
