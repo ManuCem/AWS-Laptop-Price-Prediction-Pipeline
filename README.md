@@ -53,7 +53,8 @@ To ensure the pipeline was cost-effective and scalable, I implemented a format c
 
 * **Storage Efficiency**: Transformed the final consolidated dataset from **CSV to Apache Parquet**, significantly reducing file size.
 * **Query Performance**: Enabled **Amazon Athena** to perform columnar scans, reducing query costs by up to **90%**.
-
+  
+![ETL](assets/glue.png)
 ![Parquet Optimization](assets/parquet.png)
 
 ---
@@ -66,7 +67,6 @@ The pipeline follows two distinct paths once the cleaned data reaches Amazon S3:
 
 ![Query Result 2](assets/query5.png)
 
-> **Insight:** Dashboards are visualized in **Amazon QuickSight** to track price trends across different brands.
 
 ### 2. The ML Path (Intelligence)
 **Amazon SageMaker** pulls the optimized Parquet data to train an **XGBoost Regression** model.
