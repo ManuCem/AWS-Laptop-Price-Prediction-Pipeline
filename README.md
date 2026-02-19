@@ -63,15 +63,15 @@ Instead of just moving the files, I configured a Glue Job to:
 * **Cost & Speed**: By utilizing Parquet's columnar structure, **Amazon Athena** queries now scan 90% less data, making the analytics layer faster and cheaper.
 
 ---
+## 📊 Data Inspection & Visualization: TAD
+To validate the optimized `.parquet` files, I utilized **TAD (Tabular Data Viewer)**. 
 
-## 📊 Advanced Data Visualization: TIBCO TDV
-To gain deeper insights from the optimized `.parquet` files, I utilized **TIBCO TDV (Data Virtualization)**. 
+TAD allowed for high-performance viewing of the large Parquet datasets directly on my desktop, enabling:
+* **Instant Filtering**: Quickly navigating through millions of rows to verify cleaning results.
+* **Schema Validation**: Ensuring the AWS Glue data type casting was correctly reflected in the final Parquet files.
+* **Rapid Visualization**: Generating quick pivot tables and charts to identify price trends without the overhead of a full BI suite.
 
-By connecting TDV directly to the S3 data lake, I was able to:
-* **Federated Queries**: Query the Parquet files without the need for additional data movement.
-* **Business Intelligence**: Create a virtualized view of the laptop price data to generate complex visualizations and trend reports.
-
-![TDV Visualization](assets/parquet.png)
+![TAD Visualization](assets/parquet.png)
 
 ---
 
