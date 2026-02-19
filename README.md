@@ -47,15 +47,22 @@ I deployed a dedicated **Amazon EC2** instance to run a Python-based consolidati
 ![Clean Data](assets/clean_data.png)
 
 ---
+## ⚡ Performance Optimization: AWS Glue ETL
+To ensure the pipeline was cost-effective and the data was "ML-ready," I used **AWS Glue** to perform a specialized ETL (Extract, Transform, Load) job.
 
-## ⚡ Performance Optimization: CSV to Parquet
-To ensure the pipeline was cost-effective and scalable, I implemented a format conversion:
+### 🛠️ Data Transformation & Schema Mapping
+Instead of just moving the files, I configured a Glue Job to:
+* **Convert Format**: Transformed the raw CSV data into **Apache Parquet**, a columnar storage format.
+* **Schema Casting**: Manually mapped and changed **Data Types** (e.g., converting "Price" from a generic string to a numeric decimal) to ensure mathematical accuracy in SageMaker and Athena.
 
-* **Storage Efficiency**: Transformed the final consolidated dataset from **CSV to Apache Parquet**, significantly reducing file size.
-* **Query Performance**: Enabled **Amazon Athena** to perform columnar scans, reducing query costs by up to **90%**.
-  
-![ETL](assets/glue.png)
-![Parquet Optimization](assets/parquet.png)
+
+
+### 💰 Why it Matters:
+* **Storage Efficiency**: Parquet reduced the storage footprint in S3 significantly compared to the original 10 CSVs.
+* **Cost & Speed**: By utilizing Parquet's columnar structure, **Amazon Athena** queries now scan 90% less data, making the analytics layer faster and cheaper.
+
+![AWS Glue ETL Job](assets/glue.png)
+![Parquet Storage Comparison](assets/parquet.png)
 
 ---
 
