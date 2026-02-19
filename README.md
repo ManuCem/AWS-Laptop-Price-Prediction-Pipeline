@@ -77,7 +77,7 @@ The pipeline follows two distinct paths once the cleaned data reaches Amazon S3:
 ## 🛡️ Cloud Governance & Cleanup
 To follow AWS best practices for cost management and security, I utilized my custom tool:
 
-* **Tool Used**: [AWS-Governance-Cleanup-Tool](https://github.com/YourUsername/AWS-Governance-Cleanup-Tool)
+* **Tool Used**: [AWS-Governance-Cleanup-Tool](https://github.com/ManuCem/AWS-Governance-Cleanup-Tool)
 * **Action**: Automatically decommissioned unused resources (EC2, S3, SageMaker) to prevent **"Cloud Sprawl"** and unnecessary billing.
 
 ---
