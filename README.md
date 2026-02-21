@@ -1,6 +1,6 @@
 # 💻 AWS Laptop Price Prediction: End-to-End Data Pipeline
 
-This project demonstrates a **production-grade AWS architecture** designed to transform a fragmented, "awful" dataset into a reliable machine learning model. It covers the entire lifecycle: **Automation**, **Data Engineering**, **Machine Learning**, and **Governance**.
+This project shows a **professional AWS setup** designed to turn a messy dataset into a working machine learning model. It covers the whole process: **Automation**, **Data Engineering**, **Machine Learning**, and **Management**.
 
 ---
 
@@ -9,35 +9,35 @@ This project demonstrates a **production-grade AWS architecture** designed to tr
 ---
 
 ## 📊 Data Source
-The raw data for this project was sourced from **Kaggle**:
+The raw data for this project came from **Kaggle**:
 
 * **Dataset Link:** [Amazon Laptop Messy Dataset](https://www.kaggle.com/datasets/rudraprasadbhuyan/amazon-laptop-messy-dataset)
-* **Original Format:** 10 separate CSV files requiring significant cleaning and consolidation.
+* **Original Format:** 10 separate CSV files that needed a lot of cleaning and joining.
 
 ---
 
 ## 🏗️ Architecture Overview
-* **EventBridge**: Automates pipeline triggers.
-* **EC2**: Preprocesses 10 messy CSVs using Python.
-* **S3**: Centralized data lake storage with **Parquet** optimization.
-* **Glue**: Mapped the data schema and managed the Data Catalog.
-* **Athena**: Validated data structure with SQL.
-* **QuickSight**: Visualized laptop price trends.
-* **SageMaker**: Trained XGBoost prediction model.
-* **IAM**: Managed secure service access.
-* **CloudWatch**: Logged model training health.
-* **SNS**: Alerted via email on pipeline failures.
+* **EventBridge**: Automatically starts the pipeline.
+* **EC2**: Uses Python to clean and join the 10 messy CSV files.
+* **S3**: Central storage (Data Lake) using **Parquet** to save space.
+* **Glue**: Managed the data structure and the Data Catalog.
+* **Athena**: Used SQL to check if the data was correct.
+* **QuickSight**: Created charts to show laptop price trends.
+* **SageMaker**: Trained an XGBoost model to predict prices.
+* **IAM**: Managed security and access for all services.
+* **CloudWatch**: Monitored the health of the model training.
+* **SNS**: Sends an email alert if the pipeline fails.
 
 ---
 
-## 🧹 The "Awful Data" Challenge
-The project began with 10 separate, inconsistent CSV files. The data was unusable due to missing values, mixed units (GB vs TB), and corrupted strings.
+## 🧹 The Data Challenge
+The project started with 10 inconsistent CSV files. The data was difficult to use because of missing values, different units (GB vs TB), and text errors.
 
-### 🛠️ The Rescue (EC2 + Python)
-I deployed a dedicated **Amazon EC2** instance to run a Python-based consolidation script that:
-1.  **Merged** 10 fragmented datasets into one master file.
-2.  **Standardized** hardware specs using Regex (Regular Expressions).
-3.  **Cleaned** the "Excel mess" to ensure high-quality input for the model.
+### 🛠️ The Solution (EC2 + Python)
+I used an **Amazon EC2** instance to run a Python script that:
+1.  **Joined** the 10 separate files into one master file.
+2.  **Fixed** hardware specs using Regex (Regular Expressions).
+3.  **Cleaned** the formatting errors to provide high-quality data for the model.
 
 #### Raw Data Samples
 ![Raw Data 1](assets/raw_data1.png)
@@ -48,59 +48,58 @@ I deployed a dedicated **Amazon EC2** instance to run a Python-based consolidati
 
 ---
 
-## ⚡ Performance Optimization: AWS Glue ETL
-To ensure the pipeline was cost-effective and the data was "ML-ready," I used **AWS Glue** to perform a specialized ETL (Extract, Transform, Load) job.
+## ⚡ Making it Faster: AWS Glue ETL
+To make the pipeline cost-effective and ready for Machine Learning, I used **AWS Glue** for an ETL (Extract, Transform, Load) job.
 
-### 🛠️ Data Transformation & Schema Mapping
-Instead of just moving the files, I configured a Glue Job to:
-* **Convert Format**: Transformed the raw CSV data into **Apache Parquet**, a columnar storage format.
-* **Schema Casting**: Manually mapped and changed **Data Types** (e.g., converting "Price" from a generic string to a numeric decimal) to ensure mathematical accuracy in SageMaker and Athena.
+### 🛠️ Data Change & Schema Mapping
+Instead of just moving the files, I set up a Glue Job to:
+* **Change Format**: Converted the CSV data into **Apache Parquet** to save space.
+* **Fix Data Types**: Manually changed types (for example, turning "Price" from text into a number) to make sure SageMaker and Athena could use it correctly.
 
 ![AWS Glue ETL Job](assets/glue.png)
 
-### 💰 Why it Matters:
-* **Storage Efficiency**: Parquet reduced the storage footprint in S3 significantly compared to the original 10 CSVs.
-* **Cost & Speed**: By utilizing Parquet's columnar structure, **Amazon Athena** queries now scan 90% less data, making the analytics layer faster and cheaper.
+### 💰 Why this helps:
+* **Save Space**: Parquet files are much smaller in S3 than the original CSVs.
+* **Save Money**: Because Parquet is a better format, **Amazon Athena** scans 90% less data, making it faster and cheaper.
 
 ---
-## 📊 Data Inspection & Visualization: TAD
-To validate the optimized `.parquet` files, I utilized **TAD (Tabular Data Viewer)**. 
+## 📊 Checking the Data: TAD
+To check the new `.parquet` files, I used **TAD (Tabular Data Viewer)**. 
 
-TAD allowed for high-performance viewing of the large Parquet datasets directly on my desktop, enabling:
-* **Instant Filtering**: Quickly navigating through millions of rows to verify cleaning results.
-* **Schema Validation**: Ensuring the AWS Glue data type casting was correctly reflected in the final Parquet files.
-* **Rapid Visualization**: Generating quick pivot tables and charts to identify price trends without the overhead of a full BI suite.
+TAD allowed me to view the large datasets on my computer to:
+* **Filter Data**: Quickly check millions of rows to see if the cleaning worked.
+* **Check the Structure**: Make sure the data types from AWS Glue were correct in the final files.
+* **Quick Charts**: Create fast charts to see price trends without using a heavy tool.
 
 ![TAD Visualization](assets/parquet.png)
 
 ---
 
 ## 🚀 Data Workflow
-The pipeline follows two distinct paths once the cleaned data reaches Amazon S3:
+The data follows two paths after it reaches Amazon S3:
 
-### 1. The Analytics Path (Validation & BI)
-**AWS Glue** catalogs the data, allowing **Amazon Athena** to run validation queries.
+### 1. The Analytics Path (Validation)
+**AWS Glue** organizes the data so **Amazon Athena** can run SQL queries to check it.
 
 ![Query Result 2](assets/query5.png)
 
-
 ### 2. The ML Path (Intelligence)
-**Amazon SageMaker** pulls the optimized Parquet data to train an **XGBoost Regression** model.
+**Amazon SageMaker** uses the optimized Parquet data to train a model that predicts laptop prices.
 
 ![SageMaker Training](assets/sagemaker.png)
 
 ---
 
-## 🛡️ Cloud Governance & Cleanup
-To follow AWS best practices for cost management and security, I utilized my custom tool:
+## 🛡️ Cleanup & Cost Control
+To follow AWS best practices and save money, I used my custom tool:
 
 * **Tool Used**: [AWS-Governance-Cleanup-Tool](https://github.com/ManuCem/AWS-Governance-Cleanup-Tool)
-* **Action**: Automatically decommissioned unused resources (EC2, S3, SageMaker) to prevent **"Cloud Sprawl"** and unnecessary billing.
+* **Action**: Automatically deleted unused resources (EC2, S3, SageMaker) to avoid unnecessary bills.
 
 ---
 
-## 🌟 Key Skills Demonstrated
-* **Cloud Architecture**: Designing automated "Hub and Spoke" pipelines.
-* **Data Engineering**: Handling 10+ fragmented sources and **Parquet optimization**.
-* **Machine Learning**: Feature engineering and XGBoost implementation.
-* **Governance**: Resource lifecycle management and cost control.
+## 🌟 Key Skills
+* **Cloud Architecture**: Designing automated pipelines.
+* **Data Engineering**: Joining 10+ files and optimizing data with **Parquet**.
+* **Machine Learning**: Implementing an XGBoost model.
+* **Cost Management**: Cleaning up resources to save money.
